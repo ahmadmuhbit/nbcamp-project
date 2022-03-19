@@ -1,0 +1,669 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Go Web Cafe RESTful API",
+    "description": "API Spec for Go Web Cafe RESTful API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9999/api"
+    }
+  ],
+  "paths": {
+    "/menus" : {
+      "get" : {
+        "tags": ["Menu API"],
+        "summary" : "List All Menu",
+        "description" : "List all menu",
+        "responses" : {
+          "200" : {
+            "description": "success get all menu",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Menus"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags": ["Menu API"],
+        "summary": "Create New Menu",
+        "description": "Create new menu",
+        "requestBody": {
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateMenus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201" : {
+            "description": "Create new menu success!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                      "data" : {
+                        "$ref" : "#/components/schemas/Menus"
+                      }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description": "Create new menu Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description": "Create new menu Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description": "Create new menu Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description": "Create new menu Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menus/{menuId}" : {
+      "get" : {
+        "tags": ["Menu API"],
+        "summary": "Get Menu by Id",
+        "description": "Get menu by id",
+        "parameters": [
+          {
+            "name": "menuId",
+            "in" : "path",
+            "description": "Menu Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get menu",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Menus"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Menu API"],
+        "summary": "Update Menu by Id",
+        "description": "Update menu by id",
+        "parameters": [
+          {
+            "name" : "menuId",
+            "in" : "path",
+            "description": "Menu Id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateMenus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "Success update category",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Menus"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description": "Update menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description": "Update menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description": "Update menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description": "Update menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Menu API"],
+        "summary": "Delete Menu by Id",
+        "description": "Delete menu by id",
+        "parameters": [
+          {
+            "name" : "menuId",
+            "in" : "path",
+            "description": "Menu Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success delete menu!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description": "Delete menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description": "Delete menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description": "Delete menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description": "Delete menu fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions" : {
+      "get" : {
+        "tags": ["Transaction API"],
+        "summary" : "List All Transaction",
+        "description" : "List all transaction",
+        "responses" : {
+          "200" : {
+            "description": "success get all transaction",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Transactions"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags": ["Transaction API"],
+        "summary" : "Create New Transaction",
+        "description" : "Create new transaction",
+        "requestBody": {
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTransactions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201" : {
+            "description": "Create new transaction success!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Transactions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description": "Create new transaction Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description": "Create new transaction Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description": "Create new transaction Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description": "Create new transaction Fail!",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{transactionId}" : {
+      "get" : {
+        "tags": ["Transaction API"],
+        "summary": "Get Transaction by Id",
+        "description": "Get Transaction by id",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in" : "path",
+            "description": "Transaction Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get transaction",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Transactions"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateOrUpdateMenus" : {
+        "type": "object",
+        "properties": {
+          "name" : {
+            "type": "string"
+          },
+          "category" : {
+            "type": "string"
+          },
+          "description" : {
+            "type": "string"
+          }
+        }
+      },
+      "Menus" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "number"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Creation Date",
+            "example" : "2021-01-30"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Updated Date",
+            "example" : "2021-01-30"
+          }
+        }
+      },
+      "Transactions" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "number"
+          },
+          "employee" : {
+            "type": "object",
+            "properties": {
+              "id" : {
+                "type" : "number"
+              },
+              "name" : {
+                "type" : "string"
+              }
+            }
+          },
+          "menu" : {
+            "type": "object",
+            "properties": {
+              "id" : {
+                "type": "number"
+              },
+              "name" : {
+                "type": "string"
+              }
+            }
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Creation Date",
+            "example" : "2021-01-30"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Updated Date",
+            "example" : "2021-01-30"
+          }
+        }
+      },
+      "CreateTransactions" : {
+        "type": "object",
+        "properties": {
+          "employee_id" : {
+            "type": "string"
+          },
+          "menu_id" : {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
