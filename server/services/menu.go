@@ -15,9 +15,21 @@ type MenuServices struct {
 func NewMenuService(db *sql.DB) *MenuServices {
 	repository := repositories.NewMenuRepository(db)
 	return &MenuServices{
-		DB:             db,
 		MenuRepository: repository,
+		DB:             db,
 	}
+}
+
+func (m *MenuServices) CreateNewMenu(request *params.MenuCreate) (bool, error) {
+
+	menu := request.ParseToModel()
+
+	err := m.MenuRepository.Save(menu)
+	if err != nil {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 func (m *MenuServices) GetAllMenu() (*[]params.MenuSingleView, error) {
@@ -28,6 +40,15 @@ func (m *MenuServices) GetAllMenu() (*[]params.MenuSingleView, error) {
 	}
 
 	return makeMenuListView(menus), nil
+}
+
+func makeMenuListView(models *[]models.Menu) *[]params.MenuSingleView {
+	var menuListView []params.MenuSingleView
+	for _, model := range *models {
+		menuListView = append(menuListView, *makeMenuSingleView(&model))
+	}
+
+	return &menuListView
 }
 
 func makeMenuSingleView(models *models.Menu) *params.MenuSingleView {
@@ -41,23 +62,11 @@ func makeMenuSingleView(models *models.Menu) *params.MenuSingleView {
 	}
 }
 
-func makeMenuListView(models *[]models.Menu) *[]params.MenuSingleView {
-	var menuListView []params.MenuSingleView
-	for _, model := range *models {
-		menuListView = append(menuListView, *makeMenuSingleView(&model))
-	}
-
-	return &menuListView
-}
-
-func (m *MenuServices) CreateNewMenu(request *params.MenuCreate) (bool, error) {
-
-	menu := request.ParseToModel()
-
-	err := m.MenuRepository.CreateMenu(menu)
+func (m *MenuServices) GetMenuByID(id string) (*params.MenuSingleView, error) {
+	menu, err := m.MenuRepository.FindByID(id)
 	if err != nil {
-		return false, nil
+		return nil, err
 	}
 
-	return true, nil
+	return makeMenuSingleView(menu), nil
 }

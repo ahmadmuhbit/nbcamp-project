@@ -40,6 +40,7 @@ func employeeRoute(router *mux.Router, db *sql.DB) {
 
 func menuRouteAPI(router *mux.Router, db *sql.DB) {
 	menuController := controllers.NewMenuController(db)
-	router.HandleFunc("/api/menus", menuController.FindAll).Methods("GET")
 	router.HandleFunc("/api/menus", menuController.Add).Methods("POST")
+	router.HandleFunc("/api/menus", menuController.FindAll).Methods("GET")
+	router.HandleFunc("/api/menus/{id}", menuController.FindByID).Methods("GET")
 }

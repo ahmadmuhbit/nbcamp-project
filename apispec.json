@@ -195,6 +195,24 @@
                 }
               }
             }
+          },
+          "404" : {
+            "description": "No data",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
