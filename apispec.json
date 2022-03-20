@@ -18,7 +18,7 @@
         "description" : "List all menu",
         "responses" : {
           "200" : {
-            "description": "success get all menu",
+            "description": "Success get all menu",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -32,6 +32,24 @@
                       "items" : {
                         "$ref" : "#/components/schemas/Menus"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description": "No data",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status" : {
+                      "type": "number"
+                    },
+                    "message" : {
+                      "type" : "string"
                     }
                   }
                 }
@@ -65,7 +83,7 @@
                       "type": "number"
                     },
                       "data" : {
-                        "$ref" : "#/components/schemas/Menus"
+                        "type" : "string"
                       }
                   }
                 }
