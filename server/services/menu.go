@@ -70,3 +70,13 @@ func (m *MenuServices) GetMenuByID(id string) (*params.MenuSingleView, error) {
 
 	return makeMenuSingleView(menu), nil
 }
+
+func (m *MenuServices) UpdateMenuByID(request *params.MenuUpdate) (bool, error) {
+	model := request.ParseToModel()
+	err := m.MenuRepository.UpdateByID(model)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}

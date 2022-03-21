@@ -16,6 +16,7 @@ type MenuController interface {
 	Add(w http.ResponseWriter, r *http.Request)
 	FindAll(w http.ResponseWriter, r *http.Request)
 	FindByID(w http.ResponseWriter, r *http.Request)
+	UpdateByID(w http.ResponseWriter, r *http.Request)
 }
 
 type menuController struct {
@@ -88,4 +89,37 @@ func (m *menuController) FindByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helper.HandleSuccess(w, menu)
+}
+
+func (m *menuController) UpdateByID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	newID, err := uuid.Parse(id)
+	if err != nil {
+		helper.HandleBadRequest(w, err)
+		return
+	}
+
+	var request params.MenuUpdate
+
+	err = json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		helper.HandleBadRequest(w, err)
+		return
+	}
+
+	request.ID = newID
+
+	_, err = services.NewMenuService(m.db).UpdateMenuByID(&request)
+
+	if err != nil {
+		if err.Error() == sql.ErrNoRows.Error() {
+			helper.HandleNotFound(w, errors.New("NO DATA"))
+		} else {
+			helper.HandleInternalServerError(w, err)
+		}
+		return
+	}
+	helper.HandleSuccess(w, "update success")
 }

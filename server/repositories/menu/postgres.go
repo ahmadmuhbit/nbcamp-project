@@ -105,3 +105,24 @@ func (m *menuRepo) FindByID(id string) (*models.Menu, error) {
 
 	return &menu, nil
 }
+
+func (m *menuRepo) UpdateByID(menu *models.Menu) error {
+	query := `
+		UPDATE menus
+		SET name=$1, category=$2, description=$3, updated_at=$4
+		WHERE id = $5
+	`
+
+	stmt, err := m.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(
+		menu.Name, menu.Category, menu.Description, menu.UpdatedAt, menu.ID,
+	)
+
+	return err
+}

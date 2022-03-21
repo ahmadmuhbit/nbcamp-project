@@ -43,4 +43,5 @@ func menuRouteAPI(router *mux.Router, db *sql.DB) {
 	router.HandleFunc("/api/menus", menuController.Add).Methods("POST")
 	router.HandleFunc("/api/menus", menuController.FindAll).Methods("GET")
 	router.HandleFunc("/api/menus/{id}", menuController.FindByID).Methods("GET")
+	router.HandleFunc("/api/menus/{id}", menuController.UpdateByID).Methods("PUT")
 }
